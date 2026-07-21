@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import { motion } from "framer-motion";
 import SectionWrapper from "@/components/SectionWrapper";
@@ -6,23 +7,36 @@ import SectionWrapper from "@/components/SectionWrapper";
 export default function Home() {
   return (
     <>
-      <SectionWrapper bg="dark" id="hero" style={{ minHeight: "100vh", display: "flex", alignItems: "center", position: "relative", overflow: "hidden" }}>
+      <SectionWrapper bg="dark" id="hero" style={{ minHeight: "100vh", display: "flex", alignItems: "center", position: "relative", overflow: "hidden", paddingTop: "80px" }}>
         {/* Animated Background */}
         <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0, opacity: 0.1, backgroundImage: "linear-gradient(var(--blue) 1px, transparent 1px), linear-gradient(90deg, var(--blue) 1px, transparent 1px)", backgroundSize: "50px 50px" }} className="animate-pulse-glow"></div>
         
-        <div style={{ position: "relative", zIndex: 1, maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <span className="badge" style={{ marginBottom: "24px" }}>App Size: &lt;2MB</span>
-            <h1 style={{ fontSize: "clamp(3rem, 8vw, 5rem)", lineHeight: 1.1, marginBottom: "24px" }}>
+        <div style={{ position: "relative", zIndex: 1, display: "flex", flexWrap: "wrap", alignItems: "center", gap: "60px" }}>
+          <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} style={{ flex: "1 1 400px" }}>
+            <span className="badge" style={{ marginBottom: "24px", background: "rgba(201,168,76,0.1)", color: "var(--gold)", border: "1px solid var(--gold)" }}>The Lagos Model</span>
+            <h1 style={{ fontSize: "clamp(3rem, 6vw, 4.5rem)", lineHeight: 1.1, marginBottom: "24px", textShadow: "0 0 40px rgba(25, 111, 191, 0.3)" }}>
               Tradeable Impact & <br/><span style={{ color: "var(--gold)" }}>Grassroots Innovation</span>
             </h1>
-            <p style={{ fontSize: "1.25rem", color: "var(--grey-light)", marginBottom: "40px", maxWidth: "600px", margin: "0 auto 40px" }}>
+            <p style={{ fontSize: "1.25rem", color: "var(--grey-light)", marginBottom: "40px", maxWidth: "600px" }}>
               For the Lagos Megacity. We bypass legacy infrastructure to empower UNILAG youth through verifiable, decentralized skill building.
             </p>
-            <div style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
-              <button className="btn-primary" style={{ padding: "1rem 2rem", fontSize: "1.125rem" }}>Join the Network</button>
+            <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
+              <button className="btn-primary" style={{ padding: "1rem 2rem", fontSize: "1.125rem", boxShadow: "0 0 20px rgba(201,168,76,0.2)" }}>Join the Network</button>
               <button className="btn-outline" style={{ padding: "1rem 2rem", fontSize: "1.125rem" }}>Explore Architecture</button>
             </div>
+          </motion.div>
+
+          <motion.div initial={{ opacity: 0, x: 50, scale: 0.9 }} animate={{ opacity: 1, x: 0, scale: 1 }} transition={{ duration: 1, delay: 0.2 }} style={{ flex: "1 1 400px", position: "relative", borderRadius: "16px", overflow: "hidden", boxShadow: "0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(25, 111, 191, 0.2)", border: "1px solid rgba(255,255,255,0.1)" }}>
+            <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", background: "linear-gradient(45deg, rgba(25,111,191,0.2), transparent)", zIndex: 2 }}></div>
+            <Image 
+              src="/lagos_ecosystem.jpg" 
+              alt="Lagos Startup Ecosystem" 
+              width={800} 
+              height={600} 
+              style={{ width: "100%", height: "auto", display: "block", transform: "scale(1.05)", transition: "transform 10s linear" }}
+              onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.1)"}
+              onMouseOut={(e) => e.currentTarget.style.transform = "scale(1.05)"}
+            />
           </motion.div>
         </div>
       </SectionWrapper>
@@ -87,36 +101,42 @@ export default function Home() {
 
       <SectionWrapper bg="navy" id="flywheel" className="section">
         <div style={{ textAlign: "center", marginBottom: "60px" }}>
-          <span className="badge" style={{ marginBottom: "16px" }}>Core Engine</span>
-          <h2 style={{ fontSize: "2.5rem" }}>The Akoka Flywheel</h2>
+          <span className="badge" style={{ marginBottom: "16px", background: "rgba(25,111,191,0.2)", color: "var(--blue)" }}>Core Engine</span>
+          <h2 style={{ fontSize: "2.5rem", marginBottom: "16px" }}>The Akoka Flywheel</h2>
           <p style={{ fontSize: "1.25rem", color: "var(--grey-light)", maxWidth: "700px", margin: "0 auto" }}>
             A self-sustaining cycle of human capital development, local impact, and economic empowerment.
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "32px", position: "relative" }}>
-          <div className="glass-card" style={{ borderTop: "4px solid var(--blue)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
-            <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "var(--blue)", color: "var(--cream)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.5rem", fontWeight: "bold", marginBottom: "16px" }}>1</div>
-            <h3 style={{ fontSize: "1.5rem", marginBottom: "16px", color: "var(--blue)" }}>Learn</h3>
-            <p style={{ color: "var(--grey-light)" }}>
-              Gamified, micro-learning modules mapped to real-world, market-ready skills — bypassing the theoretical gap of traditional education.
-            </p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "40px", alignItems: "center" }}>
+          <div style={{ flex: "1 1 400px", position: "relative", borderRadius: "24px", overflow: "hidden", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }}>
+            <Image 
+              src="/flywheel.jpg" 
+              alt="Akoka Flywheel Concept" 
+              width={600} 
+              height={600} 
+              style={{ width: "100%", height: "auto", display: "block" }} 
+            />
           </div>
 
-          <div className="glass-card" style={{ borderTop: "4px solid var(--crimson)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
-            <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "var(--crimson)", color: "var(--cream)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.5rem", fontWeight: "bold", marginBottom: "16px" }}>2</div>
-            <h3 style={{ fontSize: "1.5rem", marginBottom: "16px", color: "var(--crimson)" }}>Impact</h3>
-            <p style={{ color: "var(--grey-light)" }}>
-              Applying acquired skills directly to solve pressing civic, environmental, and health challenges within the Akoka community.
-            </p>
-          </div>
+          <div style={{ flex: "1 1 400px", display: "flex", flexDirection: "column", gap: "32px" }}>
+            <div className="glass-card" style={{ borderLeft: "4px solid var(--blue)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateX(10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateX(0)"}>
+              <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "rgba(25,111,191,0.2)", color: "var(--blue)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem", fontWeight: "bold", marginBottom: "12px" }}>1</div>
+              <h3 style={{ fontSize: "1.5rem", marginBottom: "8px", color: "var(--blue)" }}>Learn</h3>
+              <p style={{ color: "var(--grey-light)" }}>Gamified, micro-learning modules mapped to real-world skills — bypassing theoretical gaps.</p>
+            </div>
 
-          <div className="glass-card" style={{ borderTop: "4px solid var(--gold)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
-            <div style={{ width: "48px", height: "48px", borderRadius: "50%", background: "var(--gold)", color: "var(--navy)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.5rem", fontWeight: "bold", marginBottom: "16px" }}>3</div>
-            <h3 style={{ fontSize: "1.5rem", marginBottom: "16px", color: "var(--gold)" }}>Earn</h3>
-            <p style={{ color: "var(--grey-light)" }}>
-              Unlocking digital tokens, blockchain-verified credentials, and Esusu-backed micro-funding upon verified project completion.
-            </p>
+            <div className="glass-card" style={{ borderLeft: "4px solid var(--crimson)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateX(10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateX(0)"}>
+              <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "rgba(139,26,43,0.2)", color: "var(--crimson)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem", fontWeight: "bold", marginBottom: "12px" }}>2</div>
+              <h3 style={{ fontSize: "1.5rem", marginBottom: "8px", color: "var(--crimson)" }}>Impact</h3>
+              <p style={{ color: "var(--grey-light)" }}>Applying acquired skills directly to solve pressing civic, environmental, and health challenges.</p>
+            </div>
+
+            <div className="glass-card" style={{ borderLeft: "4px solid var(--gold)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateX(10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateX(0)"}>
+              <div style={{ width: "32px", height: "32px", borderRadius: "50%", background: "rgba(201,168,76,0.2)", color: "var(--gold)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1rem", fontWeight: "bold", marginBottom: "12px" }}>3</div>
+              <h3 style={{ fontSize: "1.5rem", marginBottom: "8px", color: "var(--gold)" }}>Earn</h3>
+              <p style={{ color: "var(--grey-light)" }}>Unlocking digital tokens, blockchain credentials, and Esusu-backed micro-funding.</p>
+            </div>
           </div>
         </div>
       </SectionWrapper>
@@ -150,22 +170,37 @@ export default function Home() {
           </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "24px", marginBottom: "60px" }}>
-          <button className="glass-card" style={{ borderLeft: "4px solid var(--crimson)", textAlign: "left", cursor: "pointer" }}>
-            <h3 style={{ fontSize: "1.25rem", marginBottom: "8px" }}>Changemaker</h3>
-            <p style={{ color: "var(--grey-light)", fontSize: "0.875rem" }}>I'm a UNILAG student ready to solve community problems.</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px", marginBottom: "60px" }}>
+          <button className="glass-card" style={{ padding: 0, overflow: "hidden", textAlign: "left", cursor: "pointer", border: "1px solid rgba(255,255,255,0.1)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
+            <Image src="/changemaker.jpg" alt="Changemaker" width={400} height={300} style={{ width: "100%", height: "200px", objectFit: "cover" }} />
+            <div style={{ padding: "24px", borderTop: "4px solid var(--blue)" }}>
+              <h3 style={{ fontSize: "1.25rem", marginBottom: "8px", color: "var(--cream)" }}>Changemaker</h3>
+              <p style={{ color: "var(--grey-light)", fontSize: "0.875rem" }}>I'm a UNILAG student ready to solve community problems.</p>
+            </div>
           </button>
-          <button className="glass-card" style={{ borderLeft: "4px solid var(--gold)", textAlign: "left", cursor: "pointer" }}>
-            <h3 style={{ fontSize: "1.25rem", marginBottom: "8px" }}>CSR Funder</h3>
-            <p style={{ color: "var(--grey-light)", fontSize: "0.875rem" }}>I want to invest in verified grassroots impact.</p>
+          
+          <button className="glass-card" style={{ padding: 0, overflow: "hidden", textAlign: "left", cursor: "pointer", border: "1px solid rgba(255,255,255,0.1)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
+            <Image src="/csr_funder.jpg" alt="CSR Funder" width={400} height={300} style={{ width: "100%", height: "200px", objectFit: "cover" }} />
+            <div style={{ padding: "24px", borderTop: "4px solid var(--gold)" }}>
+              <h3 style={{ fontSize: "1.25rem", marginBottom: "8px", color: "var(--cream)" }}>CSR Funder</h3>
+              <p style={{ color: "var(--grey-light)", fontSize: "0.875rem" }}>I want to invest in verified grassroots impact.</p>
+            </div>
           </button>
-          <button className="glass-card" style={{ borderLeft: "4px solid var(--blue)", textAlign: "left", cursor: "pointer" }}>
-            <h3 style={{ fontSize: "1.25rem", marginBottom: "8px" }}>Employer</h3>
-            <p style={{ color: "var(--grey-light)", fontSize: "0.875rem" }}>I want to verify candidates' real-world skills.</p>
+
+          <button className="glass-card" style={{ padding: 0, overflow: "hidden", textAlign: "left", cursor: "pointer", border: "1px solid rgba(255,255,255,0.1)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
+            <Image src="/employer.jpg" alt="Employer" width={400} height={300} style={{ width: "100%", height: "200px", objectFit: "cover" }} />
+            <div style={{ padding: "24px", borderTop: "4px solid var(--green)" }}>
+              <h3 style={{ fontSize: "1.25rem", marginBottom: "8px", color: "var(--cream)" }}>Employer</h3>
+              <p style={{ color: "var(--grey-light)", fontSize: "0.875rem" }}>I want to verify candidates' real-world skills.</p>
+            </div>
           </button>
-          <button className="glass-card" style={{ borderLeft: "4px solid var(--green)", textAlign: "left", cursor: "pointer" }}>
-            <h3 style={{ fontSize: "1.25rem", marginBottom: "8px" }}>Partner</h3>
-            <p style={{ color: "var(--grey-light)", fontSize: "0.875rem" }}>I represent an institution or NGO.</p>
+
+          <button className="glass-card" style={{ padding: 0, overflow: "hidden", textAlign: "left", cursor: "pointer", border: "1px solid rgba(255,255,255,0.1)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
+            <Image src="/partner.jpg" alt="Partner" width={400} height={300} style={{ width: "100%", height: "200px", objectFit: "cover" }} />
+            <div style={{ padding: "24px", borderTop: "4px solid var(--crimson)" }}>
+              <h3 style={{ fontSize: "1.25rem", marginBottom: "8px", color: "var(--cream)" }}>Partner</h3>
+              <p style={{ color: "var(--grey-light)", fontSize: "0.875rem" }}>I represent an institution or NGO.</p>
+            </div>
           </button>
         </div>
       </SectionWrapper>
