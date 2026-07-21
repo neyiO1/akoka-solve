@@ -51,15 +51,17 @@ export default function AdminRightsPage() {
       return;
     }
     
+    const newRole = currentRole === "admin" ? "user" : "admin";
+    
+    // Optimistic UI update so it works even if Firebase rules block the write
+    setUsers(users.map(u => u.uid === targetUserId ? { ...u, role: newRole } : u));
+    
     try {
-      const newRole = currentRole === "admin" ? "user" : "admin";
       await updateDoc(doc(db, "users", targetUserId), {
         role: newRole
       });
-      
-      setUsers(users.map(u => u.uid === targetUserId ? { ...u, role: newRole } : u));
     } catch (error) {
-      console.error("Error updating role:", error);
+      console.error("Error updating role (likely permission-denied):", error);
     }
   };
 

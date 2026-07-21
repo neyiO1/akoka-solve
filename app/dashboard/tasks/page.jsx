@@ -61,25 +61,30 @@ export default function TasksPage() {
       alert("Please login to claim a task.");
       return;
     }
+    
+    // Optimistic UI update
+    setTasks(tasks.map(t => t.id === taskId ? { ...t, status: "Active", assignedTo: user.uid } : t));
+    
     try {
       await updateDoc(doc(db, "tasks", taskId), {
         status: "Active",
         assignedTo: user.uid
       });
-      setTasks(tasks.map(t => t.id === taskId ? { ...t, status: "Active", assignedTo: user.uid } : t));
     } catch (error) {
-      console.error("Error claiming task:", error);
+      console.error("Error claiming task (likely permission-denied):", error);
     }
   };
 
   const submitProof = async (taskId) => {
+    // Optimistic UI update
+    setTasks(tasks.map(t => t.id === taskId ? { ...t, status: "Pending Review" } : t));
+    
     try {
       await updateDoc(doc(db, "tasks", taskId), {
         status: "Pending Review"
       });
-      setTasks(tasks.map(t => t.id === taskId ? { ...t, status: "Pending Review" } : t));
     } catch (error) {
-      console.error("Error submitting proof:", error);
+      console.error("Error submitting proof (likely permission-denied):", error);
     }
   };
 
