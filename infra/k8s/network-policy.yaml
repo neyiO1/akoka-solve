@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: restrict-inter-pod-traffic
+  namespace: akoka-solve-prod
+spec:
+  podSelector: {} # Applies to all pods in the namespace
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          role: api-gateway # Only API gateway can talk to internal services by default
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: kube-system # Allow DNS resolution
+      ports:
+      - protocol: UDP
+        port: 53
