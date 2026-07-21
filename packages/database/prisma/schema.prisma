@@ -1,0 +1,171 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  STUDENT
+  MENTOR
+  ADMIN
+  EMPLOYER
+  CSR_FUNDER
+}
+
+enum Tier {
+  TIER_1
+  TIER_2
+  TIER_3
+}
+
+enum ChallengeStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+  EXPIRED
+}
+
+enum TaskProofStatus {
+  PENDING
+  PEER_REVIEW
+  MENTOR_REVIEW
+  APPROVED
+  REJECTED
+}
+
+enum EsusuPoolStatus {
+  ACTIVE
+  COMPLETED
+  DISSOLVED
+}
+
+enum DifficultyLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+model User {
+  id                 String         @id @default(uuid())
+  email              String         @unique
+  walletAddress      String?        @unique
+  didIdentifier      String?        @unique
+  firstName          String?
+  lastName           String?
+  role               Role           @default(STUDENT)
+  tier               Tier           @default(TIER_1)
+  totalImpactCredits Int            @default(0)
+  isVerified         Boolean        @default(false)
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  taskProofs         TaskProof[]
+  impactCredits      ImpactCredit[]
+  peerReviews        PeerReview[]
+
+  @@map("users")
+}
+
+model Module {
+  id               String          @id @default(uuid())
+  title            String
+  description      String
+  difficultyLevel  DifficultyLevel @default(BEGINNER)
+  skillCategory    String
+  estimatedMinutes Int
+  xpReward         Int
+  isActive         Boolean         @default(true)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  @@map("modules")
+}
+
+model Challenge {
+  id              String          @id @default(uuid())
+  title           String
+  description     String
+  sdgIndicators   String[]
+  location        String?
+  latitude        Float?
+  longitude       Float?
+  requiredTier    Tier            @default(TIER_1)
+  deadline        DateTime
+  maxParticipants Int
+  status          ChallengeStatus @default(OPEN)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  taskProofs      TaskProof[]
+
+  @@index([latitude, longitude])
+  @@map("challenges")
+}
+
+model TaskProof {
+  id             String          @id @default(uuid())
+  challengeId    String
+  userId         String
+  imageUrl       String?
+  description    String?
+  geoLatitude    Float?
+  geoLongitude   Float?
+  submittedAt    DateTime        @default(now())
+  status         TaskProofStatus @default(PENDING)
+  peerApprovals  Int             @default(0)
+  mentorApproved Boolean         @default(false)
+
+  challenge      Challenge       @relation(fields: [challengeId], references: [id])
+  user           User            @relation(fields: [userId], references: [id])
+  impactCredits  ImpactCredit[]
+  peerReviews    PeerReview[]
+
+  @@index([geoLatitude, geoLongitude])
+  @@map("task_proofs")
+}
+
+model ImpactCredit {
+  id              String   @id @default(uuid())
+  userId          String
+  taskProofId     String
+  amount          Float
+  tokenId         String   @unique
+  mintedAt        DateTime @default(now())
+  transactionHash String?
+
+  user            User      @relation(fields: [userId], references: [id])
+  taskProof       TaskProof @relation(fields: [taskProofId], references: [id])
+
+  @@map("impact_credits")
+}
+
+model EsusuPool {
+  id                String          @id @default(uuid())
+  name              String
+  memberIds         String[]
+  poolAmount        Float
+  currentRound      Int             @default(1)
+  rotationFrequency String
+  status            EsusuPoolStatus @default(ACTIVE)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@map("esusu_pools")
+}
+
+model PeerReview {
+  id          String   @id @default(uuid())
+  taskProofId String
+  reviewerId  String
+  approved    Boolean
+  feedback    String?
+  reviewedAt  DateTime @default(now())
+
+  taskProof   TaskProof @relation(fields: [taskProofId], references: [id])
+  reviewer    User      @relation(fields: [reviewerId], references: [id])
+
+  @@map("peer_reviews")
+}

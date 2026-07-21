@@ -1,0 +1,31 @@
+{
+  "name": "@akoka-solve/identity",
+  "version": "1.0.0",
+  "description": "Identity and Trust Layer for Akoka Solve",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@nestjs/common": "^10.0.0",
+    "@veramo/core": "^5.0.0",
+    "@veramo/credential-w3c": "^5.0.0",
+    "@veramo/did-manager": "^5.0.0",
+    "@veramo/did-provider-ethr": "^5.0.0",
+    "@veramo/did-resolver": "^5.0.0",
+    "@veramo/key-manager": "^5.0.0",
+    "@veramo/kms-local": "^5.0.0",
+    "did-resolver": "^4.0.0",
+    "ethers": "^6.0.0",
+    "ethr-did-resolver": "^10.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "snarkjs": "^0.7.0"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}
