@@ -11,7 +11,7 @@ export default function DocsPage() {
   };
 
   return (
-    <div style={{ display: "flex", paddingTop: "80px", minHeight: "100vh", background: "var(--navy)" }}>
+    <div style={{ display: "flex", paddingTop: "0px", minHeight: "100vh", background: "var(--navy)" }}>
       {/* Sidebar Navigation */}
       <aside style={{ width: "280px", borderRight: "1px solid rgba(255,255,255,0.05)", padding: "40px 24px", position: "sticky", top: "80px", height: "calc(100vh - 80px)", overflowY: "auto", background: "rgba(13,27,42,0.5)" }}>
         <h3 style={{ fontSize: "1.125rem", color: "var(--gold)", marginBottom: "24px", textTransform: "uppercase", letterSpacing: "1px", borderBottom: "1px solid rgba(201,168,76,0.2)", paddingBottom: "12px" }}>API Reference</h3>

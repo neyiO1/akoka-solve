@@ -21,6 +21,11 @@ export default function DashboardLayout({ children }) {
     { name: "Settings", path: "/dashboard/settings" },
   ];
 
+  const adminLinks = [
+    { name: "System Architecture", path: "/dashboard/architecture" },
+    { name: "API Docs", path: "/dashboard/docs" },
+  ];
+
   return (
     <div style={{ 
       minHeight: "100vh", 
@@ -71,6 +76,30 @@ export default function DashboardLayout({ children }) {
               }}
               onMouseEnter={(e) => e.target.style.background = "rgba(255,255,255,0.05)"}
               onMouseLeave={(e) => e.target.style.background = isActive ? "rgba(43, 108, 176, 0.2)" : "transparent"}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
+
+          <div style={{ marginTop: "20px", marginBottom: "8px", fontSize: "0.75rem", fontWeight: 700, color: "var(--grey-light)", textTransform: "uppercase", letterSpacing: "1px" }}>Admin Access</div>
+          
+          {adminLinks.map((item, i) => {
+            const isActive = pathname === item.path;
+            return (
+              <Link key={`admin-${i}`} href={item.path} style={{
+                background: isActive ? "rgba(220, 38, 38, 0.2)" : "transparent",
+                color: isActive ? "var(--crimson)" : "var(--grey-light)",
+                border: `1px solid ${isActive ? "rgba(220, 38, 38, 0.3)" : "transparent"}`,
+                padding: "12px 16px",
+                borderRadius: "8px",
+                textAlign: "left",
+                fontWeight: 600,
+                cursor: "pointer",
+                transition: "all 0.2s ease"
+              }}
+              onMouseEnter={(e) => e.target.style.background = "rgba(255,255,255,0.05)"}
+              onMouseLeave={(e) => e.target.style.background = isActive ? "rgba(220, 38, 38, 0.2)" : "transparent"}
               >
                 {item.name}
               </Link>

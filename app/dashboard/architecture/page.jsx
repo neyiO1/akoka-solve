@@ -157,8 +157,8 @@ export default function ArchitecturePage() {
   const [activeTab, setActiveTab] = useState("overview");
 
   return (
-    <div style={{ paddingTop: "80px" }}>
-      <SectionWrapper bg="dark" style={{ minHeight: "calc(100vh - 80px)" }}>
+    <div style={{ paddingTop: "0px" }}>
+      <SectionWrapper bg="dark" style={{ minHeight: "calc(100vh - 80px)", borderRadius: "16px" }}>
         <div style={{ textAlign: "center", marginBottom: "40px" }}>
           <span className="badge" style={{ marginBottom: "16px" }}>Technical Spec</span>
           <h1 style={{ fontSize: "3rem", marginBottom: "16px" }}>System Architecture</h1>

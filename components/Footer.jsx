@@ -28,8 +28,6 @@ export default function Footer() {
               <h4 style={{ color: "var(--cream)", marginBottom: "16px" }}>Platform</h4>
               <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "8px" }}>
                 <li><Link href="/" style={{ color: "var(--grey-light)", fontSize: "0.875rem" }}>Home</Link></li>
-                <li><Link href="/architecture" style={{ color: "var(--grey-light)", fontSize: "0.875rem" }}>Architecture</Link></li>
-                <li><Link href="/docs" style={{ color: "var(--grey-light)", fontSize: "0.875rem" }}>API Docs</Link></li>
               </ul>
             </div>
           </div>
