@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 export default function SignupModal({ isOpen, onClose }) {
+  const router = useRouter();
   const [role, setRole] = useState("STUDENT");
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const [authSuccess, setAuthSuccess] = useState(false);
@@ -314,6 +316,7 @@ export default function SignupModal({ isOpen, onClose }) {
                 onClick={() => {
                   setAuthSuccess(false);
                   onClose();
+                  router.push("/dashboard");
                 }}
               >
                 Enter Platform
