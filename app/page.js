@@ -1,10 +1,15 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import SignupModal from "@/components/SignupModal";
 
 import { motion } from "framer-motion";
 import SectionWrapper from "@/components/SectionWrapper";
 
 export default function Home() {
+  const [isSignupOpen, setIsSignupOpen] = useState(false);
+
   return (
     <>
       <SectionWrapper bg="dark" id="hero" style={{ minHeight: "100vh", display: "flex", alignItems: "center", position: "relative", overflow: "hidden", paddingTop: "80px" }}>
@@ -21,8 +26,10 @@ export default function Home() {
               For the Lagos Megacity. We bypass legacy infrastructure to empower UNILAG youth through verifiable, decentralized skill building.
             </p>
             <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
-              <button className="btn-primary" style={{ padding: "1rem 2rem", fontSize: "1.125rem", boxShadow: "0 0 20px rgba(201,168,76,0.2)" }}>Join the Network</button>
-              <button className="btn-outline" style={{ padding: "1rem 2rem", fontSize: "1.125rem" }}>Explore Architecture</button>
+              <button className="btn-primary" style={{ padding: "1rem 2rem", fontSize: "1.125rem", boxShadow: "0 0 20px rgba(201,168,76,0.2)", cursor: "pointer" }} onClick={() => setIsSignupOpen(true)}>Join the Network</button>
+              <Link href="/console" style={{ textDecoration: "none" }}>
+                <button className="btn-outline" style={{ padding: "1rem 2rem", fontSize: "1.125rem", color: "var(--gold)", border: "1px solid var(--gold)", cursor: "pointer" }}>Interactive Dev Console</button>
+              </Link>
             </div>
           </motion.div>
 
@@ -171,7 +178,7 @@ export default function Home() {
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px", marginBottom: "60px" }}>
-          <button className="glass-card" style={{ padding: 0, overflow: "hidden", textAlign: "left", cursor: "pointer", border: "1px solid rgba(255,255,255,0.1)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
+          <button onClick={() => setIsSignupOpen(true)} className="glass-card" style={{ padding: 0, overflow: "hidden", textAlign: "left", cursor: "pointer", border: "1px solid rgba(255,255,255,0.1)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
             <Image src="/changemaker.jpg" alt="Changemaker" width={400} height={300} style={{ width: "100%", height: "200px", objectFit: "cover" }} />
             <div style={{ padding: "24px", borderTop: "4px solid var(--blue)" }}>
               <h3 style={{ fontSize: "1.25rem", marginBottom: "8px", color: "var(--cream)" }}>Changemaker</h3>
@@ -179,7 +186,7 @@ export default function Home() {
             </div>
           </button>
           
-          <button className="glass-card" style={{ padding: 0, overflow: "hidden", textAlign: "left", cursor: "pointer", border: "1px solid rgba(255,255,255,0.1)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
+          <button onClick={() => setIsSignupOpen(true)} className="glass-card" style={{ padding: 0, overflow: "hidden", textAlign: "left", cursor: "pointer", border: "1px solid rgba(255,255,255,0.1)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
             <Image src="/csr_funder.jpg" alt="CSR Funder" width={400} height={300} style={{ width: "100%", height: "200px", objectFit: "cover" }} />
             <div style={{ padding: "24px", borderTop: "4px solid var(--gold)" }}>
               <h3 style={{ fontSize: "1.25rem", marginBottom: "8px", color: "var(--cream)" }}>CSR Funder</h3>
@@ -187,7 +194,7 @@ export default function Home() {
             </div>
           </button>
 
-          <button className="glass-card" style={{ padding: 0, overflow: "hidden", textAlign: "left", cursor: "pointer", border: "1px solid rgba(255,255,255,0.1)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
+          <button onClick={() => setIsSignupOpen(true)} className="glass-card" style={{ padding: 0, overflow: "hidden", textAlign: "left", cursor: "pointer", border: "1px solid rgba(255,255,255,0.1)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
             <Image src="/employer.jpg" alt="Employer" width={400} height={300} style={{ width: "100%", height: "200px", objectFit: "cover" }} />
             <div style={{ padding: "24px", borderTop: "4px solid var(--green)" }}>
               <h3 style={{ fontSize: "1.25rem", marginBottom: "8px", color: "var(--cream)" }}>Employer</h3>
@@ -195,7 +202,7 @@ export default function Home() {
             </div>
           </button>
 
-          <button className="glass-card" style={{ padding: 0, overflow: "hidden", textAlign: "left", cursor: "pointer", border: "1px solid rgba(255,255,255,0.1)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
+          <button onClick={() => setIsSignupOpen(true)} className="glass-card" style={{ padding: 0, overflow: "hidden", textAlign: "left", cursor: "pointer", border: "1px solid rgba(255,255,255,0.1)", transition: "all 0.3s ease" }} onMouseEnter={(e) => e.currentTarget.style.transform = "translateY(-10px)"} onMouseLeave={(e) => e.currentTarget.style.transform = "translateY(0)"}>
             <Image src="/partner.jpg" alt="Partner" width={400} height={300} style={{ width: "100%", height: "200px", objectFit: "cover" }} />
             <div style={{ padding: "24px", borderTop: "4px solid var(--crimson)" }}>
               <h3 style={{ fontSize: "1.25rem", marginBottom: "8px", color: "var(--cream)" }}>Partner</h3>
@@ -204,6 +211,8 @@ export default function Home() {
           </button>
         </div>
       </SectionWrapper>
+
+      <SignupModal isOpen={isSignupOpen} onClose={() => setIsSignupOpen(false)} />
     </>
   );
 }
