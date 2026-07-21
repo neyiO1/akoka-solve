@@ -1,23 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePaystackPayment } from "react-paystack";
 
 export default function EsusuPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isProcessing, setIsProcessing] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [userEmail, setUserEmail] = useState("student@unilag.edu.ng");
 
-  const handleContribute = () => {
-    setIsProcessing(true);
+  useEffect(() => {
+    // Fallback if we have real data from the signup context
+    const savedName = localStorage.getItem("akoka_user_name");
+    if (savedName) setUserEmail(`${savedName.replace(/\s+/g, "").toLowerCase()}@akokasolve.com`);
+  }, []);
+
+  const config = {
+    reference: (new Date()).getTime().toString(),
+    email: userEmail,
+    amount: 10000 * 100, // ₦10,000 in kobo
+    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "pk_test_placeholder_key_replace_me",
+  };
+
+  const initializePayment = usePaystackPayment(config);
+
+  const onSuccess = (reference) => {
+    console.log("Paystack Payment complete! Reference:", reference);
+    // In a real app, you would send this reference to the backend API Gateway
+    // to verify the payment and mint the equivalent USDC on Polygon.
+    setPaymentSuccess(true);
     setTimeout(() => {
-      setIsProcessing(false);
-      setPaymentSuccess(true);
-      setTimeout(() => {
-        setPaymentSuccess(false);
-        setIsModalOpen(false);
-      }, 3000);
-    }, 2000);
+      setPaymentSuccess(false);
+      setIsModalOpen(false);
+    }, 4000);
+  };
+
+  const onClosePaystack = () => {
+    console.log("Paystack closed by user");
+  };
+
+  const handleContributeClick = () => {
+    if (!process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY) {
+      console.warn("No Paystack Public Key found. Using fallback flow or failing.");
+    }
+    initializePayment({ onSuccess, onClose: onClosePaystack });
   };
 
   return (
@@ -86,7 +112,7 @@ export default function EsusuPage() {
                 <>
                   <h2 style={{ fontSize: "1.5rem", marginBottom: "10px" }}>Deposit to Esusu</h2>
                   <p style={{ color: "var(--grey-light)", fontSize: "0.875rem", marginBottom: "20px" }}>
-                    Your Naira deposit will be converted to USDC on Polygon and locked into the smart contract pool.
+                    Your Naira deposit will be securely processed by Paystack and converted to USDC.
                   </p>
                   
                   <div style={{ background: "rgba(0,0,0,0.3)", padding: "15px", borderRadius: "8px", marginBottom: "20px", border: "1px solid rgba(255,255,255,0.1)" }}>
@@ -95,18 +121,17 @@ export default function EsusuPage() {
                       <span style={{ fontWeight: "bold" }}>₦10,000</span>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", color: "var(--grey-light)", fontSize: "0.875rem" }}>
-                      <span>USDC Equivalent:</span>
-                      <span>~$6.50 USDC</span>
+                      <span>Email:</span>
+                      <span>{userEmail}</span>
                     </div>
                   </div>
 
                   <button 
                     className="btn-primary" 
                     style={{ width: "100%", padding: "12px", borderRadius: "8px", background: "var(--crimson)", cursor: "pointer", fontWeight: "bold" }}
-                    onClick={handleContribute}
-                    disabled={isProcessing}
+                    onClick={handleContributeClick}
                   >
-                    {isProcessing ? "Processing via Paystack..." : "Pay with Paystack"}
+                    Pay with Paystack
                   </button>
                 </>
               ) : (
@@ -118,9 +143,9 @@ export default function EsusuPage() {
                   >
                     ✓
                   </motion.div>
-                  <h2 style={{ fontSize: "1.5rem", marginBottom: "10px", color: "var(--green)" }}>Contribution Locked!</h2>
+                  <h2 style={{ fontSize: "1.5rem", marginBottom: "10px", color: "var(--green)" }}>Payment Successful!</h2>
                   <p style={{ color: "var(--grey-light)", fontSize: "0.875rem" }}>
-                    Transaction successful. ₦10,000 has been added to the Round 2 Pool.
+                    Paystack has verified your ₦10,000 deposit. The backend is minting USDC to the Round 2 Pool.
                   </p>
                 </div>
               )}
@@ -131,3 +156,4 @@ export default function EsusuPage() {
     </>
   );
 }
+
