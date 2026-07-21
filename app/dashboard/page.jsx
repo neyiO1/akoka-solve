@@ -6,9 +6,12 @@ import { getOfflineTasks } from "@/lib/indexeddb";
 
 export default function DashboardHome() {
   const [offlineTasks, setOfflineTasks] = useState([]);
-  const [userName] = useState("Changemaker");
+  const [userName, setUserName] = useState("Changemaker");
   
   useEffect(() => {
+    const savedName = localStorage.getItem("akoka_user_name");
+    if (savedName) setUserName(savedName);
+
     const loadTasks = async () => {
       try {
         const tasks = await getOfflineTasks();

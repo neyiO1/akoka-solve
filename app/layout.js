@@ -1,6 +1,7 @@
 import { Space_Grotesk, Inter } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import PWARegister from "@/components/PWARegister";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -22,6 +23,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable}`}>
       <body>
+        <PWARegister />
         <Navbar />
         <main style={{ paddingTop: "80px", minHeight: "100vh" }}>
           {children}

@@ -23,8 +23,10 @@ export default function SignupModal({ isOpen, onClose }) {
               .then((result) => {
                 const user = result.user;
                 setIsGoogleLoading(false);
+                const userName = user.displayName || "Google User";
+                localStorage.setItem("akoka_user_name", userName);
                 setFormData({
-                  name: user.displayName || "Google User",
+                  name: userName,
                   email: user.email || "",
                   wallet: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
                 });
@@ -39,8 +41,10 @@ export default function SignupModal({ isOpen, onClose }) {
                 console.error("Google Auth failed, falling back to mock registration:", error);
                 
                 // Fallback for development without configured env keys
+                const fallbackName = "Developer Guest";
+                localStorage.setItem("akoka_user_name", fallbackName);
                 setFormData({
-                  name: "Developer Guest",
+                  name: fallbackName,
                   email: "developer@akokasolve.com",
                   wallet: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
                 });

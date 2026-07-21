@@ -1,11 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function DashboardLayout({ children }) {
-  const [userName] = useState("Changemaker");
+  const [userName, setUserName] = useState("Changemaker");
+
+  useEffect(() => {
+    const savedName = localStorage.getItem("akoka_user_name");
+    if (savedName) setUserName(savedName);
+  }, []);
   const pathname = usePathname();
 
   const links = [
