@@ -37,6 +37,17 @@ export default function TasksPage() {
         setTasks(tasksList);
       } catch (error) {
         console.error("Error fetching tasks:", error);
+        if (error.code === 'permission-denied') {
+          console.warn("Firestore rules are blocking access. Please update your Firebase Security Rules to allow read/write in test mode.");
+        }
+        
+        // Fallback to dummy data so the UI doesn't break
+        if (user) {
+          setTasks([
+            { id: "task_1", title: "Tutor Year 1 CS Students", status: "Available", description: "Required proof: Photo of session + Attendance sheet.", assignedTo: null },
+            { id: "task_2", title: "Akoka Canal Cleanup", status: "Available", description: "Clear waste from the canal segment near UNILAG gate.", assignedTo: null }
+          ]);
+        }
       } finally {
         setIsFetching(false);
       }

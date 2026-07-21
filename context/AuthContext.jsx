@@ -15,23 +15,28 @@ export function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         // User is signed in
-        const userDocRef = doc(db, "users", currentUser.uid);
-        const userDoc = await getDoc(userDocRef);
+        let userRole = currentUser.email === "neyi.j.oyedele@gmail.com" ? "master_admin" : "user";
+        
+        try {
+          const userDocRef = doc(db, "users", currentUser.uid);
+          const userDoc = await getDoc(userDocRef);
 
-        let userRole = "user";
-        if (userDoc.exists()) {
-          userRole = userDoc.data().role || "user";
-        } else {
-          // New user, create document
-          userRole = currentUser.email === "neyi.j.oyedele@gmail.com" ? "master_admin" : "user";
-          await setDoc(userDocRef, {
-            uid: currentUser.uid,
-            email: currentUser.email,
-            displayName: currentUser.displayName,
-            photoURL: currentUser.photoURL,
-            role: userRole,
-            createdAt: new Date().toISOString()
-          });
+          if (userDoc.exists()) {
+            userRole = userDoc.data().role || "user";
+          } else {
+            // New user, create document
+            await setDoc(userDocRef, {
+              uid: currentUser.uid,
+              email: currentUser.email,
+              displayName: currentUser.displayName,
+              photoURL: currentUser.photoURL,
+              role: userRole,
+              createdAt: new Date().toISOString()
+            });
+          }
+        } catch (error) {
+          console.error("Firestore error in AuthContext (likely permission-denied):", error);
+          // Fallback gracefully without crashing
         }
         
         setUser(currentUser);
