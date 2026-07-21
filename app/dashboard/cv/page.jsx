@@ -28,14 +28,14 @@ export default function CVPage() {
   };
 
   const handleLinkedInShare = () => {
-    const text = encodeURIComponent("I just verified my social impact with Akoka Solve! 🌍\n\nCheck out my Decentralized CV backed by NYSC & UNILAG.\n\n#AkokaSolve #SocialImpact #Web3 #Changemaker");
+    const text = encodeURIComponent("I just verified my social impact with Akoka Solve! 🌍\n\nCheck out my Decentralized CV on the Akoka Solve platform.\n\n#AkokaSolve #SocialImpact #Web3 #Changemaker");
     window.open(`https://www.linkedin.com/feed/?shareActive=true&text=${text}`, "_blank");
   };
 
   return (
     <>
       <h1 style={{ fontSize: "2rem", fontWeight: 700 }}>Digital CV</h1>
-      <p style={{ color: "var(--grey-light)", marginTop: "-10px", marginBottom: "20px" }}>Verified by NYSC & UNILAG</p>
+      <p style={{ color: "var(--grey-light)", marginTop: "-10px", marginBottom: "20px" }}>Verified by Akoka Solve Platform</p>
 
       <div 
         ref={cvRef}
@@ -48,7 +48,7 @@ export default function CVPage() {
             <p style={{ color: "var(--blue)" }}>Tier 2 Verifiable Contributor</p>
           </div>
           <div style={{ textAlign: "right" }}>
-            <div style={{ background: "var(--green)", color: "var(--navy)", padding: "4px 8px", borderRadius: "8px", fontWeight: 700, fontSize: "0.875rem", display: "inline-block", marginBottom: "8px" }}>NYSC Approved</div>
+            <div style={{ background: "var(--green)", color: "var(--navy)", padding: "4px 8px", borderRadius: "8px", fontWeight: 700, fontSize: "0.875rem", display: "inline-block", marginBottom: "8px" }}>Platform Verified</div>
             <div style={{ fontSize: "0.75rem", color: "var(--grey-light)", fontFamily: "monospace" }}>Hash: 0x3f8a...9c21</div>
           </div>
         </div>

@@ -51,7 +51,7 @@ export default function Navbar() {
             <div style={{ display: "flex", gap: "24px", alignItems: "center" }}>
               <Link href="/platform" style={{ color: "var(--cream)", fontWeight: 500, transition: "color 0.2s ease" }} onMouseEnter={(e) => e.target.style.color = "var(--gold)"} onMouseLeave={(e) => e.target.style.color = "var(--cream)"}>Platform</Link>
               <Link href="/impact" style={{ color: "var(--cream)", fontWeight: 500, transition: "color 0.2s ease" }} onMouseEnter={(e) => e.target.style.color = "var(--green)"} onMouseLeave={(e) => e.target.style.color = "var(--cream)"}>Impact</Link>
-              <Link href="/architecture" style={{ color: "var(--cream)", fontWeight: 500, transition: "color 0.2s ease" }} onMouseEnter={(e) => e.target.style.color = "var(--blue)"} onMouseLeave={(e) => e.target.style.color = "var(--cream)"}>Architecture</Link>
+
               <Link href="/dashboard" className="btn-outline" style={{ padding: "0.5rem 1rem", fontSize: "0.875rem" }}>
                 Dashboard
               </Link>
