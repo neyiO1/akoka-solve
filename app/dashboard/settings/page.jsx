@@ -1,6 +1,22 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { auth } from "@/lib/firebase";
+import { signOut } from "firebase/auth";
+
 export default function SettingsPage() {
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+    localStorage.removeItem("akoka_user_name");
+    router.push("/");
+  };
+
   return (
     <>
       <h1 style={{ fontSize: "2rem", fontWeight: 700 }}>Settings</h1>
@@ -28,7 +44,11 @@ export default function SettingsPage() {
             </div>
           </div>
 
-          <button className="btn-outline" style={{ marginTop: "20px", padding: "12px", borderRadius: "8px", color: "var(--crimson)", borderColor: "var(--crimson)", fontWeight: 600 }}>
+          <button 
+            className="btn-outline" 
+            style={{ marginTop: "20px", padding: "12px", borderRadius: "8px", color: "var(--crimson)", borderColor: "var(--crimson)", fontWeight: 600, cursor: "pointer" }}
+            onClick={handleSignOut}
+          >
             Sign Out
           </button>
 
