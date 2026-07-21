@@ -23,11 +23,24 @@ export default function TasksPage() {
         
         // Seed dummy tasks if DB is empty
         if (tasksList.length === 0 && user) {
-          const dummyTasks = [
+          let dummyTasks = [
             { id: "task_1", title: "Tutor Year 1 CS Students", status: "Available", description: "Required proof: Photo of session + Attendance sheet.", assignedTo: null },
             { id: "task_2", title: "Akoka Canal Cleanup", status: "Available", description: "Clear waste from the canal segment near UNILAG gate.", assignedTo: null },
-            { id: "task_3", title: "Deliver Medical Supplies", status: "Available", description: "Deliver 5 boxes of basic aid to the primary health center.", assignedTo: null }
+            { id: "task_3", title: "Deliver Medical Supplies", status: "Available", description: "Deliver 5 boxes of basic aid to the primary health center.", assignedTo: null },
+            { id: "task_4", title: "Organize Tech Meetup", status: "Available", description: "Host a 2-hour web3 meetup for students.", assignedTo: null },
+            { id: "task_5", title: "Plant Trees at UNILAG", status: "Available", description: "Plant 10 saplings in the engineering faculty.", assignedTo: null },
+            { id: "task_6", title: "Fix Campus WiFi", status: "Available", description: "Assist the IT dept in troubleshooting router 4B.", assignedTo: null },
+            { id: "task_7", title: "Distribute Food Drives", status: "Available", description: "Help distribute food packs in Akoka.", assignedTo: null },
+            { id: "task_8", title: "Mentorship Session", status: "Available", description: "Mentor 3 high school students in math.", assignedTo: null },
           ];
+          
+          // Try to load cached tasks from local storage
+          const cached = localStorage.getItem("akoka_tasks");
+          if (cached) {
+            dummyTasks = JSON.parse(cached);
+          } else {
+            localStorage.setItem("akoka_tasks", JSON.stringify(dummyTasks));
+          }
           for (const t of dummyTasks) {
             await setDoc(doc(db, "tasks", t.id), t);
             tasksList.push(t);
@@ -41,11 +54,18 @@ export default function TasksPage() {
           console.warn("Firestore rules are blocking access. Please update your Firebase Security Rules to allow read/write in test mode.");
         }
         
-        // Fallback to dummy data so the UI doesn't break
+        // Fallback to dummy/cached data so the UI doesn't break
         if (user) {
-          setTasks([
+          const cached = localStorage.getItem("akoka_tasks");
+          setTasks(cached ? JSON.parse(cached) : [
             { id: "task_1", title: "Tutor Year 1 CS Students", status: "Available", description: "Required proof: Photo of session + Attendance sheet.", assignedTo: null },
-            { id: "task_2", title: "Akoka Canal Cleanup", status: "Available", description: "Clear waste from the canal segment near UNILAG gate.", assignedTo: null }
+            { id: "task_2", title: "Akoka Canal Cleanup", status: "Available", description: "Clear waste from the canal segment near UNILAG gate.", assignedTo: null },
+            { id: "task_3", title: "Deliver Medical Supplies", status: "Available", description: "Deliver 5 boxes of basic aid to the primary health center.", assignedTo: null },
+            { id: "task_4", title: "Organize Tech Meetup", status: "Available", description: "Host a 2-hour web3 meetup for students.", assignedTo: null },
+            { id: "task_5", title: "Plant Trees at UNILAG", status: "Available", description: "Plant 10 saplings in the engineering faculty.", assignedTo: null },
+            { id: "task_6", title: "Fix Campus WiFi", status: "Available", description: "Assist the IT dept in troubleshooting router 4B.", assignedTo: null },
+            { id: "task_7", title: "Distribute Food Drives", status: "Available", description: "Help distribute food packs in Akoka.", assignedTo: null },
+            { id: "task_8", title: "Mentorship Session", status: "Available", description: "Mentor 3 high school students in math.", assignedTo: null }
           ]);
         }
       } finally {
@@ -63,7 +83,9 @@ export default function TasksPage() {
     }
     
     // Optimistic UI update
-    setTasks(tasks.map(t => t.id === taskId ? { ...t, status: "Active", assignedTo: user.uid } : t));
+    const updatedTasks = tasks.map(t => t.id === taskId ? { ...t, status: "Active", assignedTo: user.uid } : t);
+    setTasks(updatedTasks);
+    localStorage.setItem("akoka_tasks", JSON.stringify(updatedTasks));
     
     try {
       await updateDoc(doc(db, "tasks", taskId), {
@@ -77,7 +99,9 @@ export default function TasksPage() {
 
   const submitProof = async (taskId) => {
     // Optimistic UI update
-    setTasks(tasks.map(t => t.id === taskId ? { ...t, status: "Pending Review" } : t));
+    const updatedTasks = tasks.map(t => t.id === taskId ? { ...t, status: "Pending Review" } : t);
+    setTasks(updatedTasks);
+    localStorage.setItem("akoka_tasks", JSON.stringify(updatedTasks));
     
     try {
       await updateDoc(doc(db, "tasks", taskId), {

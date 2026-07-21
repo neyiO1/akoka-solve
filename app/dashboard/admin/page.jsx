@@ -32,7 +32,8 @@ export default function AdminRightsPage() {
         console.error("Error fetching users:", error);
         // Fallback for UI testing
         if (user) {
-          setUsers([
+          const cached = localStorage.getItem("akoka_users");
+          setUsers(cached ? JSON.parse(cached) : [
             { uid: user.uid, email: user.email, displayName: user.displayName, role: "master_admin" },
             { uid: "mock_2", email: "testuser@gmail.com", displayName: "Test User", role: "user" }
           ]);
@@ -54,7 +55,9 @@ export default function AdminRightsPage() {
     const newRole = currentRole === "admin" ? "user" : "admin";
     
     // Optimistic UI update so it works even if Firebase rules block the write
-    setUsers(users.map(u => u.uid === targetUserId ? { ...u, role: newRole } : u));
+    const updatedUsers = users.map(u => u.uid === targetUserId ? { ...u, role: newRole } : u);
+    setUsers(updatedUsers);
+    localStorage.setItem("akoka_users", JSON.stringify(updatedUsers));
     
     try {
       await updateDoc(doc(db, "users", targetUserId), {
