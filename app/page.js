@@ -27,9 +27,6 @@ export default function Home() {
             </p>
             <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
               <button className="btn-primary" style={{ padding: "1rem 2rem", fontSize: "1.125rem", boxShadow: "0 0 20px rgba(201,168,76,0.2)", cursor: "pointer" }} onClick={() => setIsSignupOpen(true)}>Join the Network</button>
-              <Link href="/console" style={{ textDecoration: "none" }}>
-                <button className="btn-outline" style={{ padding: "1rem 2rem", fontSize: "1.125rem", color: "var(--gold)", border: "1px solid var(--gold)", cursor: "pointer" }}>Interactive Dev Console</button>
-              </Link>
             </div>
           </motion.div>
 
