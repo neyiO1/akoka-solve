@@ -53,6 +53,9 @@ export default function Navbar() {
               <Link href="/impact" style={{ color: "var(--cream)", fontWeight: 500, transition: "color 0.2s ease" }} onMouseEnter={(e) => e.target.style.color = "var(--green)"} onMouseLeave={(e) => e.target.style.color = "var(--cream)"}>Impact</Link>
               <Link href="/architecture" style={{ color: "var(--cream)", fontWeight: 500, transition: "color 0.2s ease" }} onMouseEnter={(e) => e.target.style.color = "var(--blue)"} onMouseLeave={(e) => e.target.style.color = "var(--cream)"}>Architecture</Link>
               <Link href="/docs" style={{ color: "var(--cream)", fontWeight: 500, transition: "color 0.2s ease" }} onMouseEnter={(e) => e.target.style.color = "var(--crimson)"} onMouseLeave={(e) => e.target.style.color = "var(--cream)"}>API Docs</Link>
+              <Link href="/dashboard" className="btn-outline" style={{ padding: "0.5rem 1rem", fontSize: "0.875rem" }}>
+                Dashboard
+              </Link>
               <button 
                 className="btn-primary" 
                 style={{ padding: "0.5rem 1rem", fontSize: "0.875rem", cursor: "pointer" }}
