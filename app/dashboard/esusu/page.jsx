@@ -1,8 +1,25 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function EsusuPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+
+  const handleContribute = () => {
+    setIsProcessing(true);
+    setTimeout(() => {
+      setIsProcessing(false);
+      setPaymentSuccess(true);
+      setTimeout(() => {
+        setPaymentSuccess(false);
+        setIsModalOpen(false);
+      }, 3000);
+    }, 2000);
+  };
+
   return (
     <>
       <h1 style={{ fontSize: "2rem", fontWeight: 700, color: "var(--crimson)" }}>Esusu Smart Pool</h1>
@@ -15,7 +32,13 @@ export default function EsusuPage() {
           </div>
           <h2 style={{ fontSize: "1.5rem", marginBottom: "8px" }}>Active Round: 2</h2>
           <p style={{ color: "var(--grey-light)", fontSize: "0.875rem", marginBottom: "20px" }}>Current recipient is receiving payouts.</p>
-          <button className="btn-primary" style={{ width: "100%", padding: "12px", borderRadius: "8px", background: "var(--crimson)" }}>Contribute to Pool</button>
+          <button 
+            className="btn-primary" 
+            style={{ width: "100%", padding: "12px", borderRadius: "8px", background: "var(--crimson)", cursor: "pointer", fontWeight: "bold" }}
+            onClick={() => setIsModalOpen(true)}
+          >
+            Contribute to Pool (₦10,000)
+          </button>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
@@ -41,6 +64,70 @@ export default function EsusuPage() {
           ))}
         </div>
       </div>
+
+      <AnimatePresence>
+        {isModalOpen && (
+          <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, background: "rgba(0,0,0,0.8)", zIndex: 100, display: "flex", alignItems: "center", justifyContent: "center", backdropFilter: "blur(5px)" }}>
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="glass-card" 
+              style={{ padding: "30px", width: "90%", maxWidth: "400px", borderTop: "4px solid var(--crimson)", position: "relative" }}
+            >
+              <button 
+                onClick={() => setIsModalOpen(false)}
+                style={{ position: "absolute", top: "15px", right: "15px", background: "none", border: "none", color: "var(--cream)", fontSize: "1.5rem", cursor: "pointer" }}
+              >
+                &times;
+              </button>
+
+              {!paymentSuccess ? (
+                <>
+                  <h2 style={{ fontSize: "1.5rem", marginBottom: "10px" }}>Deposit to Esusu</h2>
+                  <p style={{ color: "var(--grey-light)", fontSize: "0.875rem", marginBottom: "20px" }}>
+                    Your Naira deposit will be converted to USDC on Polygon and locked into the smart contract pool.
+                  </p>
+                  
+                  <div style={{ background: "rgba(0,0,0,0.3)", padding: "15px", borderRadius: "8px", marginBottom: "20px", border: "1px solid rgba(255,255,255,0.1)" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
+                      <span>Amount:</span>
+                      <span style={{ fontWeight: "bold" }}>₦10,000</span>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", color: "var(--grey-light)", fontSize: "0.875rem" }}>
+                      <span>USDC Equivalent:</span>
+                      <span>~$6.50 USDC</span>
+                    </div>
+                  </div>
+
+                  <button 
+                    className="btn-primary" 
+                    style={{ width: "100%", padding: "12px", borderRadius: "8px", background: "var(--crimson)", cursor: "pointer", fontWeight: "bold" }}
+                    onClick={handleContribute}
+                    disabled={isProcessing}
+                  >
+                    {isProcessing ? "Processing via Paystack..." : "Pay with Paystack"}
+                  </button>
+                </>
+              ) : (
+                <div style={{ textAlign: "center", padding: "20px 0" }}>
+                  <motion.div 
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    style={{ width: "60px", height: "60px", background: "var(--green)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", fontSize: "2rem" }}
+                  >
+                    ✓
+                  </motion.div>
+                  <h2 style={{ fontSize: "1.5rem", marginBottom: "10px", color: "var(--green)" }}>Contribution Locked!</h2>
+                  <p style={{ color: "var(--grey-light)", fontSize: "0.875rem" }}>
+                    Transaction successful. ₦10,000 has been added to the Round 2 Pool.
+                  </p>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
