@@ -3,23 +3,28 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePaystackPayment } from "react-paystack";
+import { useAuth } from "@/context/AuthContext";
 
 export default function EsusuClient() {
+  const { user } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
-  const [userEmail, setUserEmail] = useState("student@unilag.edu.ng");
+  const [contributionAmount, setContributionAmount] = useState(10000); // Default ₦10,000
+  const [poolTotal, setPoolTotal] = useState(50000); // Default pool total ₦50,000
 
   useEffect(() => {
-    // Fallback if we have real data from the signup context
-    const savedName = localStorage.getItem("akoka_user_name");
-    if (savedName) setUserEmail(`${savedName.replace(/\s+/g, "").toLowerCase()}@akokasolve.com`);
+    // Load pool total from local storage as a fallback
+    const savedPool = localStorage.getItem("akoka_esusu_pool");
+    if (savedPool) {
+      setPoolTotal(parseInt(savedPool, 10));
+    }
   }, []);
 
   const config = {
     reference: (new Date()).getTime().toString(),
-    email: userEmail,
-    amount: 10000 * 100, // ₦10,000 in kobo
-    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || "pk_test_placeholder_key_replace_me",
+    email: user?.email || "student@unilag.edu.ng",
+    amount: contributionAmount * 100, // Amount in kobo
+    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_TEST_KEY || "pk_test_462b857d474bdd15ff19252bedaee50b55e1f070",
   };
 
   const initializePayment = usePaystackPayment(config);
@@ -27,6 +32,12 @@ export default function EsusuClient() {
   const onSuccess = (reference) => {
     console.log("Paystack Payment complete! Reference:", reference);
     setPaymentSuccess(true);
+    
+    // Optimistically update the global pool total
+    const newPoolTotal = poolTotal + contributionAmount;
+    setPoolTotal(newPoolTotal);
+    localStorage.setItem("akoka_esusu_pool", newPoolTotal.toString());
+    
     setTimeout(() => {
       setPaymentSuccess(false);
       setIsModalOpen(false);
@@ -38,16 +49,25 @@ export default function EsusuClient() {
   };
 
   const handleContributeClick = () => {
-    if (!process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY) {
-      console.warn("No Paystack Public Key found. Using fallback flow or failing.");
+    if (!user) {
+      alert("Please login to contribute to the Esusu Pool.");
+      return;
     }
     initializePayment({ onSuccess, onClose: onClosePaystack });
   };
 
   return (
     <>
-      <h1 style={{ fontSize: "2rem", fontWeight: 700, color: "var(--crimson)" }}>Esusu Smart Pool</h1>
-      <p style={{ color: "var(--grey-light)", marginTop: "-10px", marginBottom: "20px" }}>Decentralized Web3 Ledger (Polygon Amoy Testnet)</p>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+        <div>
+          <h1 style={{ fontSize: "2rem", fontWeight: 700, color: "var(--crimson)" }}>Esusu Smart Pool</h1>
+          <p style={{ color: "var(--grey-light)", marginTop: "-5px" }}>Community funding powered by Paystack.</p>
+        </div>
+        <div style={{ textAlign: "right" }}>
+          <div style={{ fontSize: "0.875rem", color: "var(--grey-light)" }}>Total Pool Volume</div>
+          <div style={{ fontSize: "1.5rem", fontWeight: 700, color: "var(--green)" }}>₦{poolTotal.toLocaleString()}</div>
+        </div>
+      </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px" }}>
         <div className="glass-card" style={{ padding: "30px", textAlign: "center" }}>
@@ -61,7 +81,7 @@ export default function EsusuClient() {
             style={{ width: "100%", padding: "12px", borderRadius: "8px", background: "var(--crimson)", cursor: "pointer", fontWeight: "bold" }}
             onClick={() => setIsModalOpen(true)}
           >
-            Contribute to Pool (₦10,000)
+            Fund the Pool
           </button>
         </div>
 
@@ -69,9 +89,9 @@ export default function EsusuClient() {
           <h3 style={{ fontSize: "1.25rem", marginBottom: "8px" }}>Rotation Queue</h3>
           
           {[
-            { address: "0x71C...976F (You)", status: "Paid Out (Round 1)", active: false },
-            { address: "0x89F...A12B", status: "Receiving (Round 2)", active: true },
-            { address: "0x3A2...6C2F", status: "Next (Round 3)", active: false },
+            { address: "Alice (Round 1)", status: "Paid Out (₦50,000)", active: false },
+            { address: "You (Round 2)", status: "Receiving", active: true },
+            { address: "Bob (Round 3)", status: "Next", active: false },
           ].map((m, i) => (
             <div key={i} style={{ 
               background: m.active ? "rgba(139, 26, 43, 0.2)" : "rgba(255,255,255,0.05)",
@@ -110,17 +130,31 @@ export default function EsusuClient() {
                 <>
                   <h2 style={{ fontSize: "1.5rem", marginBottom: "10px" }}>Deposit to Esusu</h2>
                   <p style={{ color: "var(--grey-light)", fontSize: "0.875rem", marginBottom: "20px" }}>
-                    Your Naira deposit will be securely processed by Paystack and converted to USDC.
+                    Your Naira deposit will be securely processed by Paystack.
                   </p>
                   
+                  <div style={{ marginBottom: "20px" }}>
+                    <label style={{ display: "block", marginBottom: "8px", fontSize: "0.875rem", color: "var(--grey-light)" }}>Contribution Amount (₦)</label>
+                    <input 
+                      type="number" 
+                      value={contributionAmount}
+                      onChange={(e) => setContributionAmount(Number(e.target.value))}
+                      style={{ 
+                        width: "100%", 
+                        padding: "12px", 
+                        borderRadius: "8px", 
+                        background: "rgba(0,0,0,0.3)", 
+                        border: "1px solid rgba(255,255,255,0.2)",
+                        color: "white",
+                        fontSize: "1rem"
+                      }}
+                    />
+                  </div>
+
                   <div style={{ background: "rgba(0,0,0,0.3)", padding: "15px", borderRadius: "8px", marginBottom: "20px", border: "1px solid rgba(255,255,255,0.1)" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
-                      <span>Amount:</span>
-                      <span style={{ fontWeight: "bold" }}>₦10,000</span>
-                    </div>
                     <div style={{ display: "flex", justifyContent: "space-between", color: "var(--grey-light)", fontSize: "0.875rem" }}>
                       <span>Email:</span>
-                      <span>{userEmail}</span>
+                      <span>{user?.email || "Not logged in"}</span>
                     </div>
                   </div>
 
@@ -129,7 +163,7 @@ export default function EsusuClient() {
                     style={{ width: "100%", padding: "12px", borderRadius: "8px", background: "var(--crimson)", cursor: "pointer", fontWeight: "bold" }}
                     onClick={handleContributeClick}
                   >
-                    Pay with Paystack
+                    Pay ₦{contributionAmount.toLocaleString()} with Paystack
                   </button>
                 </>
               ) : (
@@ -143,7 +177,7 @@ export default function EsusuClient() {
                   </motion.div>
                   <h2 style={{ fontSize: "1.5rem", marginBottom: "10px", color: "var(--green)" }}>Payment Successful!</h2>
                   <p style={{ color: "var(--grey-light)", fontSize: "0.875rem" }}>
-                    Paystack has verified your ₦10,000 deposit. The backend is minting USDC to the Round 2 Pool.
+                    Paystack has verified your ₦{contributionAmount.toLocaleString()} deposit. The Community Pool has been updated!
                   </p>
                 </div>
               )}
