@@ -2,13 +2,28 @@
 import EndpointCard from "@/components/EndpointCard";
 import CodeBlock from "@/components/CodeBlock";
 
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 export default function DocsPage() {
+  const { isAdmin, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !isAdmin) {
+      router.push("/dashboard");
+    }
+  }, [loading, isAdmin, router]);
+
   const scrollTo = (id) => {
     const el = document.getElementById(id);
     if (el) {
       window.scrollTo({ top: el.offsetTop - 100, behavior: "smooth" });
     }
   };
+
+  if (loading || !isAdmin) return null;
 
   return (
     <div style={{ display: "flex", paddingTop: "0px", minHeight: "100vh", background: "var(--navy)" }}>

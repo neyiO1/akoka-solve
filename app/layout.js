@@ -14,6 +14,8 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+import { AuthProvider } from "@/context/AuthContext";
+
 export const metadata = {
   title: "Akoka Solve — Tradeable Impact & Grassroots Innovation",
   description: "Tradeable Impact & Grassroots Innovation for the Lagos Megacity",
@@ -23,12 +25,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable}`}>
       <body>
-        <PWARegister />
-        <Navbar />
-        <main style={{ paddingTop: "80px", minHeight: "100vh" }}>
-          {children}
-        </main>
-        <Footer />
+        <AuthProvider>
+          <PWARegister />
+          <Navbar />
+          <main style={{ paddingTop: "80px", minHeight: "100vh" }}>
+            {children}
+          </main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

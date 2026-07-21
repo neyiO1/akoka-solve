@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 
 export default function SignupModal({ isOpen, onClose }) {
   const router = useRouter();
@@ -12,58 +13,23 @@ export default function SignupModal({ isOpen, onClose }) {
   const [didToken, setDidToken] = useState("");
   const [formData, setFormData] = useState({ name: "", email: "", wallet: "" });
 
-  const handleGoogleSignup = () => {
+  const { loginWithGoogle } = useAuth();
+
+  const handleGoogleSignup = async () => {
     setIsGoogleLoading(true);
-    // Dynamic import to prevent SSR issues and wait for package resolution
-    import("firebase/auth")
-      .then(({ signInWithPopup }) => {
-        import("@/lib/firebase")
-          .then(({ auth, googleProvider }) => {
-            signInWithPopup(auth, googleProvider)
-              .then((result) => {
-                const user = result.user;
-                setIsGoogleLoading(false);
-                const userName = user.displayName || "Google User";
-                localStorage.setItem("akoka_user_name", userName);
-                setFormData({
-                  name: userName,
-                  email: user.email || "",
-                  wallet: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
-                });
-                const mockDid = `did:ethr:0x${Array.from({ length: 40 }, () =>
-                  Math.floor(Math.random() * 16).toString(16)
-                ).join("")}`;
-                setDidToken(mockDid);
-                setAuthSuccess(true);
-              })
-              .catch((error) => {
-                setIsGoogleLoading(false);
-                console.error("Google Auth failed, falling back to mock registration:", error);
-                
-                // Fallback for development without configured env keys
-                const fallbackName = "Developer Guest";
-                localStorage.setItem("akoka_user_name", fallbackName);
-                setFormData({
-                  name: fallbackName,
-                  email: "developer@akokasolve.com",
-                  wallet: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F",
-                });
-                const mockDid = `did:ethr:0x${Array.from({ length: 40 }, () =>
-                  Math.floor(Math.random() * 16).toString(16)
-                ).join("")}`;
-                setDidToken(mockDid);
-                setAuthSuccess(true);
-              });
-          })
-          .catch((err) => {
-            setIsGoogleLoading(false);
-            console.error("Firebase config error:", err);
-          });
-      })
-      .catch((err) => {
-        setIsGoogleLoading(false);
-        console.error("Firebase module loading error:", err);
-      });
+    try {
+      await loginWithGoogle();
+      
+      const mockDid = `did:ethr:0x${Array.from({ length: 40 }, () =>
+        Math.floor(Math.random() * 16).toString(16)
+      ).join("")}`;
+      setDidToken(mockDid);
+      setAuthSuccess(true);
+    } catch (error) {
+      console.error("Google Auth failed", error);
+    } finally {
+      setIsGoogleLoading(false);
+    }
   };
 
   if (!isOpen) return null;

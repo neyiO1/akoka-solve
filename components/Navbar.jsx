@@ -5,10 +5,12 @@ import Link from "next/link";
 import Logo from "./Logo";
 import SignupModal from "./SignupModal";
 import { motion } from "framer-motion";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,13 +57,25 @@ export default function Navbar() {
               <Link href="/dashboard" className="btn-outline" style={{ padding: "0.5rem 1rem", fontSize: "0.875rem" }}>
                 Dashboard
               </Link>
-              <button 
-                className="btn-primary" 
-                style={{ padding: "0.5rem 1rem", fontSize: "0.875rem", cursor: "pointer" }}
-                onClick={() => setIsSignupOpen(true)}
-              >
-                Join Platform
-              </button>
+              {user ? (
+                <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                  <img src={user.photoURL || `https://ui-avatars.com/api/?name=${user.displayName || 'User'}&background=random`} alt="Profile" style={{ width: "36px", height: "36px", borderRadius: "50%", border: "2px solid var(--blue)" }} />
+                  <button 
+                    onClick={logout}
+                    style={{ background: "none", border: "none", color: "var(--crimson)", fontWeight: 600, cursor: "pointer", fontSize: "0.875rem" }}
+                  >
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <button 
+                  className="btn-primary" 
+                  style={{ padding: "0.5rem 1rem", fontSize: "0.875rem", cursor: "pointer" }}
+                  onClick={() => setIsSignupOpen(true)}
+                >
+                  Join Platform
+                </button>
+              )}
             </div>
           </div>
         </motion.header>

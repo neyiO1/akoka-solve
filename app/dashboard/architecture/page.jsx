@@ -153,8 +153,22 @@ sequenceDiagram
 `
 };
 
+import { useAuth } from "@/context/AuthContext";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 export default function ArchitecturePage() {
   const [activeTab, setActiveTab] = useState("overview");
+  const { isAdmin, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !isAdmin) {
+      router.push("/dashboard");
+    }
+  }, [loading, isAdmin, router]);
+
+  if (loading || !isAdmin) return null;
 
   return (
     <div style={{ paddingTop: "0px" }}>
