@@ -1,0 +1,154 @@
+{
+  "tasks": [
+    {
+      "id": "task_1",
+      "title": "Tutor Year 1 CS Students",
+      "description": "Required proof: Photo of session + Attendance sheet with student signatures.",
+      "points": 300,
+      "status": "Active",
+      "assignedTo": "student_123",
+      "updatedAt": "2026-09-08T11:10:23.400Z",
+      "version": 2,
+      "vectorClock": {
+        "server": 1,
+        "test_client_1": 1
+      }
+    },
+    {
+      "id": "task_2",
+      "title": "Akoka Canal Cleanup",
+      "description": "Clear recyclable plastics and waste from the canal segment near UNILAG gate.",
+      "points": 500,
+      "status": "Available",
+      "assignedTo": null,
+      "updatedAt": "2026-09-08T09:10:18.094Z",
+      "version": 1,
+      "vectorClock": {
+        "server": 1
+      }
+    },
+    {
+      "id": "task_3",
+      "title": "Deliver Medical Supplies",
+      "description": "Deliver 5 boxes of basic aid and sterile bandages to the primary health center.",
+      "points": 350,
+      "status": "Available",
+      "assignedTo": null,
+      "updatedAt": "2026-09-08T08:10:18.094Z",
+      "version": 1,
+      "vectorClock": {
+        "server": 1
+      }
+    },
+    {
+      "id": "task_4",
+      "title": "Organize Tech Meetup",
+      "description": "Host a 2-hour Web3 & Open Source workshop for engineering undergraduates.",
+      "points": 400,
+      "status": "Available",
+      "assignedTo": null,
+      "updatedAt": "2026-09-08T07:10:18.094Z",
+      "version": 1,
+      "vectorClock": {
+        "server": 1
+      }
+    },
+    {
+      "id": "task_5",
+      "title": "Plant Trees at UNILAG Campus",
+      "description": "Plant and geotag 10 indigenous saplings along the lagoon front walkway.",
+      "points": 450,
+      "status": "Available",
+      "assignedTo": null,
+      "updatedAt": "2026-09-08T06:10:18.094Z",
+      "version": 1,
+      "vectorClock": {
+        "server": 1
+      }
+    },
+    {
+      "id": "task_6",
+      "title": "Fix Campus Library WiFi",
+      "description": "Assist the UNILAG IT department in diagnosing router dead zones in the main library.",
+      "points": 300,
+      "status": "Available",
+      "assignedTo": null,
+      "updatedAt": "2026-09-08T05:10:18.094Z",
+      "version": 1,
+      "vectorClock": {
+        "server": 1
+      }
+    },
+    {
+      "id": "task_7",
+      "title": "Distribute Food Relief Packs",
+      "description": "Package and distribute emergency food parcels to elderly residents in Akoka community.",
+      "points": 350,
+      "status": "Available",
+      "assignedTo": null,
+      "updatedAt": "2026-09-08T04:10:18.094Z",
+      "version": 1,
+      "vectorClock": {
+        "server": 1
+      }
+    },
+    {
+      "id": "task_8",
+      "title": "High School Mentorship Session",
+      "description": "Conduct an afternoon mathematics and digital skills tutoring session for 3 high schoolers.",
+      "points": 250,
+      "status": "Available",
+      "assignedTo": null,
+      "updatedAt": "2026-09-08T03:10:18.094Z",
+      "version": 1,
+      "vectorClock": {
+        "server": 1
+      }
+    }
+  ],
+  "esusu": {
+    "round": 2,
+    "totalVolume": 65000,
+    "targetPerRound": 50000,
+    "rotationQueue": [
+      {
+        "address": "Alice (Round 1)",
+        "status": "Paid Out (₦50,000)",
+        "active": false
+      },
+      {
+        "address": "You (Round 2)",
+        "status": "Receiving",
+        "active": true
+      },
+      {
+        "address": "Bob (Round 3)",
+        "status": "Next",
+        "active": false
+      },
+      {
+        "address": "Chidi (Round 4)",
+        "status": "In Queue",
+        "active": false
+      }
+    ],
+    "contributions": [
+      {
+        "reference": "test_ref_1788865828583",
+        "userId": "master_admin_uid",
+        "email": "neyi.j.oyedele@gmail.com",
+        "amount": 15000,
+        "channel": "card",
+        "currency": "NGN",
+        "verifiedAt": "2026-09-08T11:10:28.639Z",
+        "source": "paystack_test_verifier",
+        "auditProof": "6e842f1a73ba4c96956f89cfab24b8e40542b62c81be5d90ce075d77eedea57e",
+        "round": 2
+      }
+    ]
+  },
+  "serverVectorClock": {
+    "server": 1,
+    "test_client_1": 1
+  }
+}
