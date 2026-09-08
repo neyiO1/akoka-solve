@@ -98,17 +98,21 @@ export default function PlatformPage() {
       </SectionWrapper>
 
       <SectionWrapper bg="dark" id="regulatory" style={{ overflow: "hidden" }}>
-        <p style={{ textAlign: "center", color: "var(--grey-light)", marginBottom: "24px", fontSize: "0.875rem", textTransform: "uppercase", letterSpacing: "2px" }}>Fully Compliant With</p>
-        <div style={{ display: "flex", gap: "40px", overflowX: "auto", paddingBottom: "20px", opacity: 0.7, scrollbarWidth: "none" }}>
-          <span style={{ whiteSpace: "nowrap", fontWeight: 600 }}>CBN / BOFIA</span>
-          <span style={{ whiteSpace: "nowrap", fontWeight: 600 }}>NDPR 2019</span>
-          <span style={{ whiteSpace: "nowrap", fontWeight: 600 }}>NITDA</span>
-          <span style={{ whiteSpace: "nowrap", fontWeight: 600 }}>NYSC</span>
-          <span style={{ whiteSpace: "nowrap", fontWeight: 600 }}>NDIC</span>
-          <span style={{ whiteSpace: "nowrap", fontWeight: 600 }}>NIMC Act</span>
+        <p style={{ textAlign: "center", color: "var(--grey-light)", marginBottom: "16px", fontSize: "0.875rem", textTransform: "uppercase", letterSpacing: "2px" }}>
+          Designed In Alignment With Research & Technical Frameworks
+        </p>
+        <div style={{ display: "flex", gap: "40px", overflowX: "auto", paddingBottom: "20px", opacity: 0.7, scrollbarWidth: "none", justifyContent: "center" }}>
+          <span style={{ whiteSpace: "nowrap", fontWeight: 600 }}>W3C Verifiable Credentials</span>
+          <span style={{ whiteSpace: "nowrap", fontWeight: 600 }}>NDPR Data Privacy</span>
+          <span style={{ whiteSpace: "nowrap", fontWeight: 600 }}>NITDA Guidelines</span>
+          <span style={{ whiteSpace: "nowrap", fontWeight: 600 }}>OpenID Connect</span>
+          <span style={{ whiteSpace: "nowrap", fontWeight: 600 }}>Polygon PoS L2</span>
           <span style={{ whiteSpace: "nowrap", fontWeight: 600 }}>Cybercrimes Act 2015</span>
-          <span style={{ whiteSpace: "nowrap", fontWeight: 600 }}>AML-CFT 2013</span>
+          <span style={{ whiteSpace: "nowrap", fontWeight: 600 }}>AML-CFT Principles</span>
         </div>
+        <p style={{ textAlign: "center", color: "var(--grey-light)", fontSize: "0.75rem", marginTop: "12px", opacity: 0.5 }}>
+          *Academic research model. Institutional and regulatory standards referenced strictly for technical design exploration.
+        </p>
       </SectionWrapper>
     </div>
   );

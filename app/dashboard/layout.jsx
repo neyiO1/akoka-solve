@@ -49,12 +49,22 @@ export default function DashboardLayout({ children }) {
           height: "fit-content"
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "20px" }}>
-            <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "var(--blue)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "bold" }}>
-              C
-            </div>
+            {user?.photoURL ? (
+              <img
+                src={user.photoURL}
+                alt={userName}
+                style={{ width: "40px", height: "40px", borderRadius: "50%", border: "2px solid var(--blue)", objectFit: "cover" }}
+              />
+            ) : (
+              <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "var(--blue)", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: "bold", fontSize: "1.1rem" }}>
+                {userName.charAt(0).toUpperCase()}
+              </div>
+            )}
             <div>
               <div style={{ fontWeight: 600 }}>{userName}</div>
-              <div style={{ fontSize: "0.75rem", color: "var(--green)" }}>Tier 2 Verified</div>
+              <div style={{ fontSize: "0.75rem", color: isAdmin ? "var(--gold)" : "var(--green)", fontWeight: isAdmin ? 700 : 500 }}>
+                {isAdmin ? "Admin Verified" : "Tier 2 Verified"}
+              </div>
             </div>
           </div>
 

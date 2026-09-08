@@ -124,21 +124,21 @@ export default function ImpactPage() {
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px" }}>
           <div className="glass-card" style={{ borderLeft: "4px solid var(--gold)" }}>
-            <h3 style={{ fontSize: "1.5rem", marginBottom: "16px" }}>U-COHUB</h3>
+            <h3 style={{ fontSize: "1.5rem", marginBottom: "16px" }}>University Innovation Hubs</h3>
             <p style={{ color: "var(--grey-light)" }}>
-              University Co-Creation/Innovation Hub. Integrating grassroots innovation directly into the UNILAG curriculum alongside structured faculty mentorship.
+              Modeled after university co-creation spaces (such as UNILAG U-COHUB research concepts) to connect student problem-solvers with structured academic and faculty mentorship.
             </p>
           </div>
           <div className="glass-card" style={{ borderLeft: "4px solid var(--green)" }}>
-            <h3 style={{ fontSize: "1.5rem", marginBottom: "16px" }}>NYSC</h3>
+            <h3 style={{ fontSize: "1.5rem", marginBottom: "16px" }}>Civic & Youth Service Models</h3>
             <p style={{ color: "var(--grey-light)" }}>
-              Aligning localized community impact directly with the National Youth Service Corps mandates for official credentialing and national scale.
+              Conceptual integration modeled after civic service frameworks, exploring standardized digital proof-of-action for verifiable credentialing.
             </p>
           </div>
           <div className="glass-card" style={{ borderLeft: "4px solid var(--blue)" }}>
-            <h3 style={{ fontSize: "1.5rem", marginBottom: "16px" }}>Global CSR</h3>
+            <h3 style={{ fontSize: "1.5rem", marginBottom: "16px" }}>Global CSR Networks</h3>
             <p style={{ color: "var(--grey-light)" }}>
-              Platforms like Benevity & Groundswell connect global corporate social capital directly to verified local impact outcomes without administrative friction.
+              Designed to connect corporate social responsibility capital directly to verified grassroots impact outcomes without administrative friction.
             </p>
           </div>
         </div>

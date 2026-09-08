@@ -44,7 +44,7 @@ export default function DocsPage() {
       <main style={{ flex: 1, padding: "60px", maxWidth: "900px", margin: "0 auto" }}>
         <h1 style={{ fontSize: "3rem", marginBottom: "16px" }}>Akoka Solve API</h1>
         <p style={{ fontSize: "1.25rem", color: "var(--grey-light)", marginBottom: "40px", lineHeight: 1.6 }}>
-          The decentralized architectural backbone. These endpoints enable institutional partners (U-COHUB, NYSC), global CSR funders (Benevity, Groundswell), and local employers to programmatically integrate with the Akoka Flywheel.
+          The decentralized architectural backbone. These endpoints are designed to enable academic innovation hubs, civic youth programs, CSR partners, and local employers to programmatically integrate with the Akoka Flywheel.
         </p>
         
         <div style={{ background: "rgba(25, 111, 191, 0.1)", border: "1px solid var(--blue)", borderRadius: "8px", padding: "16px 24px", marginBottom: "60px" }}>
@@ -180,9 +180,9 @@ export default function DocsPage() {
             <CodeBlock code={'{\n  "matches": [\n    { "did": "did:ethr:0x123...", "match_score": 94 }\n  ]\n}'} />
           </EndpointCard>
 
-          <EndpointCard method="PUT" path="/nysc/status" title="Sync NYSC CDS Status" description="Institutional handshake allowing the National Youth Service Corps to verify Community Development Service (CDS) hours automatically.">
+          <EndpointCard method="PUT" path="/nysc/status" title="Sync Civic Service Status" description="Conceptual handshake designed to allow youth service programs and civic organizations to verify Community Development Service (CDS) hours automatically.">
             <h4 style={{ color: "var(--cream)", marginBottom: "8px", fontSize: "0.875rem", textTransform: "uppercase" }}>Request Body</h4>
-            <CodeBlock code={'{\n  "nysc_call_up_number": "NYSC/UNILAG/2026/123456",\n  "cds_hours_logged": 120\n}'} />
+            <CodeBlock code={'{\n  "service_call_up_number": "CDS/UNILAG/2026/123456",\n  "cds_hours_logged": 120\n}'} />
           </EndpointCard>
 
           <EndpointCard method="GET" path="/unilag/profile" title="U-COHUB Mentorship Data" description="Allows university faculty to view academic profile alignment and mentorship progress for students in the hub.">

@@ -279,7 +279,7 @@ export default function ArchitecturePage() {
                 <SpecPanel title="Tiered Verification Thresholds">
                   <strong>Tier 1:</strong> Anonymous access utilizing ZKP (Zero-Knowledge Proofs) for initial learning modules. <br/>
                   <strong>Tier 2:</strong> Peer/Mentor review required for civic task completion. <br/>
-                  <strong>Tier 3:</strong> U-COHUB and NYSC institutional verification via biometric matching (BVN) to unlock smart contract minting and Esusu withdrawal.
+                  <strong>Tier 3:</strong> Faculty and verified community mentor verification via decentralized identity (DID) to unlock smart contract minting and Esusu micro-funding.
                 </SpecPanel>
               </div>
             </div>
